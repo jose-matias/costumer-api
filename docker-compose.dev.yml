@@ -1,0 +1,28 @@
+services:
+  customer-api:
+    container_name: customer-api
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: development
+    volumes:
+      - .:/usr/src/app
+    env_file:
+    - .env
+    command: npm run start:dev
+    ports:
+      - 3000:3000
+    depends_on:
+      - redis
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
+    driver: local
