@@ -18,8 +18,9 @@ export class CustomerService {
     createCustomerDto.id = id;
 
     await this.redisService.set(customerKey, JSON.stringify(createCustomerDto));
+    const customer = await this.redisService.get(customerKey);
 
-    return createCustomerDto;
+    return JSON.parse(customer);
   }
 
   async getById(id: string): Promise<Customer> {
@@ -43,7 +44,8 @@ export class CustomerService {
     const customerKey = 'customer:' + id;
 
     await this.redisService.set(customerKey, JSON.stringify(updateCustomerDto));
+    const customerUpdated = await this.redisService.get(customerKey);
 
-    return updateCustomerDto;
+    return JSON.parse(customerUpdated);
   }
 }

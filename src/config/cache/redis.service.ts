@@ -14,9 +14,9 @@ export class RedisService {
     });
   }
 
-  async set(key: string, value: string) {
+  async set(key: string, value: string): Promise<string> {
     try {
-      await this.redisClient.set(key, value);
+      return this.redisClient.set(key, value);
     } catch (error) {
       throw new BadGatewayException();
     }
@@ -24,7 +24,7 @@ export class RedisService {
 
   async get(key: string): Promise<string | null> {
     try {
-      return await this.redisClient.get(key);
+      return this.redisClient.get(key);
     } catch (error) {
       throw new BadGatewayException();
     }
